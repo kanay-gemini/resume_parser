@@ -14,6 +14,7 @@ An application which will parse the useful information such as name, email, phon
 If you had a python 3.x version you can do the following in linux
 
 > python3 -m venv <name_of_env>
+
 > source <name_of_env>/bin/activate
 
 or
