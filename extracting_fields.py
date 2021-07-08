@@ -87,4 +87,3 @@ def extract_college(education_segment):
             print(institute)
     return college
 
-print(extract_college(education_segment))
