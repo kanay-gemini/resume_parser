@@ -5,6 +5,7 @@ from spacy.matcher import Matcher
 import nltk
 from nltk.corpus import stopwords
 import csv
+from data import synonym_dict
 
 
 PHONE_REG = re.compile(r'[\+\(]?[1-9][0-9 .\-\(\)]{8,}[0-9]')
@@ -69,3 +70,21 @@ def extract_graduation_year(text):
 
 graduation_year = extract_graduation_year(education_segment)
 print("graduation_year = ", graduation_year)
+
+
+def extract_college(education_segment):
+    college = ''
+    education_segment = ' '.join([i.lower() for i in education_segment.split(' ')])
+    # print("Education segment = ", education_segment)
+    # print(type(education_segment))
+    for institute in synonym_dict["institutes"]:
+        # if re.search(institute, education_segment):
+        #     college = institute
+        #     break
+        if institute in education_segment:
+            college = institute
+            # college = education_segment
+            print(institute)
+    return college
+
+print(extract_college(education_segment))
