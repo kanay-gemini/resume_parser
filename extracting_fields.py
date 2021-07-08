@@ -72,18 +72,35 @@ graduation_year = extract_graduation_year(education_segment)
 print("graduation_year = ", graduation_year)
 
 
-def extract_college(education_segment):
-    college = ''
-    education_segment = ' '.join([i.lower() for i in education_segment.split(' ')])
-    # print("Education segment = ", education_segment)
-    # print(type(education_segment))
-    for institute in synonym_dict["institutes"]:
-        # if re.search(institute, education_segment):
-        #     college = institute
-        #     break
-        if institute in education_segment:
-            college = institute
-            # college = education_segment
-            print(institute)
-    return college
+# def extract_college(education_segment):
+#     college = ''
+#     education_segment = ' '.join([i.lower() for i in education_segment.split(' ')])
+#     # print("Education segment = ", education_segment)
+#     # print(type(education_segment))
+#     for institute in synonym_dict["institutes"]:
+#         # if re.search(institute, education_segment):
+#         #     college = institute
+#         #     break
+#         if institute in education_segment:
+#             college = institute
+#             # college = education_segment
+#             print(institute)
+#     return college
 
+# print(extract_college(education_segment))
+
+
+def extract_ug_course(education_segment):
+    ug_course = ''
+    for element in synonym_dict["ug_courses"]:
+        if re.search(r'\b' + element + r'\b', education_segment):
+            ug_course = element
+            break
+        # if element in education_segment:
+        #     ug_course = element
+        #     print(ug_course)
+    return ug_course
+
+
+ug_course = extract_ug_course(education_segment)
+print(ug_course)
