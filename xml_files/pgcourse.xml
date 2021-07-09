@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<synonym>
+<token group="ugcourse" canonical="PGPX">
+<variant base="PGPX"/>
+</token>
+<token group="ugcourse" canonical="M.M.M">
+<variant base="Master of Marketing Management"/>
+<variant base="MMM"/>
+<variant base="M.M.M"/>
+</token>
+<token group="ugcourse" canonical="M.M.P">
+<variant base="Master of Management Program"/>
+<variant base="MMP"/>
+<variant base="M.M.P"/>
+</token>
+<token group="ugcourse" canonical="M.M.S">
+<variant base="Master of Management Studies"/>
+<variant base="MMS"/>
+<variant base="M.M.S"/>
+</token>
+<token group="ugcourse" canonical="PGPM">
+<variant base="PGPM"/>
+</token>
+<token group="ugcourse" canonical="M.H.Sc">
+<variant base="Master Of Health Science"/>
+<variant base="MHSc"/>
+<variant base="M.H.Sc"/>
+</token>
+<token group="ugcourse" canonical="M.Arch">
+<variant base="Master of Architecture"/>
+<variant base="MArch"/>
+<variant base="M.Arch"/>
+</token>
+<token group="ugcourse" canonical="M.Ed">
+<variant base="Master of Education"/>
+<variant base="MEd"/>
+<variant base="M.Ed"/>
+</token>
+<token group="ugcourse" canonical="PGP-ABM">
+<variant base="PGP-ABM"/>
+</token>
+<token group="ugcourse" canonical="M.P.I.B">
+<variant base="Masters Programme in International Business"/>
+<variant base="MPIB"/>
+<variant base="M.P.I.B"/>
+</token>
+<token group="ugcourse" canonical="LL.M">
+<variant base="Master of Law"/>
+<variant base="LLM"/>
+<variant base="LL.M"/>
+</token>
+<token group="ugcourse" canonical="M.F.Sc">
+<variant base="Master of Fishery Sciences"/>
+<variant base="MFSc"/>
+<variant base="M.F.Sc"/>
+</token>
+<token group="ugcourse" canonical="M.L.Sc">
+<variant base="Master of Library Science"/>
+<variant base="MLSc"/>
+<variant base="M.L.Sc"/>
+</token>
+<token group="ugcourse" canonical="M.Tech">
+<variant base="Master of Technology"/>
+<variant base="MTech"/>
+<variant base="M.Tech"/>
+</token>
+<token group="ugcourse" canonical="M.C.S">
+<variant base="Master of Corporate Secretaryship"/>
+<variant base="MCS"/>
+<variant base="M.C.S"/>
+</token>
+<token group="ugcourse" canonical="M.A.M">
+<variant base="Master of Arts in Management"/>
+<variant base="MAM"/>
+<variant base="M.A.M"/>
+</token>
+<token group="ugcourse" canonical="M.C.A">
+<variant base="Master of Computer Application"/>
+<variant base="MCA"/>
+<variant base="M.C.A"/>
+</token>
+<token group="ugcourse" canonical="M.C.M">
+<variant base="Master of Computer Management"/>
+<variant base="MCM"/>
+<variant base="M.C.M"/>
+</token>
+<token group="ugcourse" canonical="M.C.L">
+<variant base="Master of Comparative Laws"/>
+<variant base="MCL"/>
+<variant base="M.C.L"/>
+</token>
+<token group="ugcourse" canonical="M.Phil">
+<variant base="Master of Philosophy"/>
+<variant base="MPhil"/>
+<variant base="M.Phil"/>
+</token>
+<token group="ugcourse" canonical="PG Programme">
+<variant base="Post Graduate Programme"/>
+<variant base="PG Programme"/>
+</token>
+<token group="ugcourse" canonical="M.L.M">
+<variant base="Master of Labour Management"/>
+<variant base="MLM"/>
+<variant base="M.L.M"/>
+</token>
+<token group="ugcourse" canonical="PGP-PMP">
+<variant base="PGP-PMP"/>
+</token>
+<token group="ugcourse" canonical="M.H.R.M">
+<variant base="Master of Human Resource Development"/>
+<variant base="MHRM"/>
+<variant base="M.H.R.M"/>
+</token>
+<token group="ugcourse" canonical="M.D.P">
+<variant base="Management Development Programme"/>
+<variant base="MDP"/>
+<variant base="M.D.P"/>
+</token>
+<token group="ugcourse" canonical="M.D.S">
+<variant base="Master of Dental Surgery"/>
+<variant base="MDS"/>
+<variant base="M.D.S"/>
+</token>
+<token group="ugcourse" canonical="EPGP">
+<variant base="EPGP"/>
+</token>
+<token group="ugcourse" canonical="M.Des">
+<variant base=" Master of Design"/>
+<variant base="MDes"/>
+<variant base="M.Des"/>
+</token>
+<token group="ugcourse" canonical="M.F.M">
+<variant base="Master of Film Management"/>
+<variant base="MFM"/>
+<variant base="M.F.M"/>
+</token>
+<token group="ugcourse" canonical="M.Ch">
+<variant base="Master of Chirurgical"/>
+<variant base="MCh"/>
+<variant base="M.Ch"/>
+</token>
+<token group="ugcourse" canonical="M.A.S.L.P">
+<variant base="Master of Audiology &amp; Speech Language Pathology"/>
+<variant base="MASLP"/>
+<variant base="M.A.S.L.P"/>
+</token>
+<token group="ugcourse" canonical="M.F.C">
+<variant base="Master of Finance &amp; Control"/>
+<variant base="MFC"/>
+<variant base="M.F.C"/>
+</token>
+<token group="ugcourse" canonical="M.F.A">
+<variant base="Master of Fine Arts"/>
+<variant base="MFA"/>
+<variant base="M.F.A"/>
+</token>
+<token group="ugcourse" canonical="M.P.S.M">
+<variant base="Masters in Public Systems Management"/>
+<variant base="MPSM"/>
+<variant base="M.P.S.M"/>
+</token>
+<token group="ugcourse" canonical="M.F.T">
+<variant base="Master of Foreign Trade"/>
+<variant base="MFT"/>
+<variant base="M.F.T"/>
+</token>
+<token group="ugcourse" canonical="M.F.S">
+<variant base="Master of Financial Services"/>
+<variant base="MFS"/>
+<variant base="M.F.S"/>
+</token>
+<token group="ugcourse" canonical="MIR and PM">
+<variant base="Master of Industrial Relation and Personal Management"/>
+<variant base="MIR and PM"/>
+</token>
+<token group="ugcourse" canonical="M.C.J">
+<variant base="Master of Communication &amp; Journalism"/>
+<variant base="MCJ"/>
+<variant base="M.C.J"/>
+</token>
+<token group="ugcourse" canonical="MPM and IR">
+<variant base="Master of Personal Management and Industrial Relation"/>
+<variant base="MPM and IR"/>
+</token>
+<token group="ugcourse" canonical="M.B.L">
+<variant base="Master of Business Laws"/>
+<variant base="MBL"/>
+<variant base="M.B.L"/>
+</token>
+<token group="ugcourse" canonical="M.B.M">
+<variant base="Master of Business Management"/>
+<variant base="MBM"/>
+<variant base="M.B.M"/>
+</token>
+<token group="ugcourse" canonical="MPM">
+<variant base="Master of Personnel Management"/>
+<variant base="MPM"/>
+</token>
+<token group="ugcourse" canonical="PGEXP">
+<variant base="PGEXP"/>
+</token>
+<token group="ugcourse" canonical="P.G.D.D.R.M">
+<variant base="P.G.D.D.R.M"/>
+<variant base="PGDDRM"/>
+</token>
+<token group="ugcourse" canonical="M.Sc">
+<variant base="Master of Science"/>
+<variant base="MSc"/>
+<variant base="M.Sc"/>
+</token>
+<token group="ugcourse" canonical="M.I.M">
+<variant base="Master of Information Management"/>
+<variant base="MIM"/>
+<variant base="M.I.M"/>
+</token>
+<token group="ugcourse" canonical="M.R.Sc">
+<variant base="M.R.Sc"/>
+<variant base="MRSc"/>
+</token>
+<token group="ugcourse" canonical="F.P.M">
+<variant base="Fellow Programme in Management"/>
+<variant base="FPM"/>
+<variant base="F.P.M"/>
+</token>
+<token group="ugcourse" canonical="M.I.B">
+<variant base="Master of International Business"/>
+<variant base="MIB"/>
+<variant base="M.I.B"/>
+</token>
+<token group="ugcourse" canonical="P.G.D.B.A">
+<variant base="PGDBA"/>
+<variant base="P.G.D.B.A"/>
+</token>
+<token group="ugcourse" canonical="M.Ed AI">
+<variant base="Master of education in Artificial Intelligence"/>
+<variant base="MEd AI"/>
+<variant base="M.Ed AI"/>
+</token>
+<token group="ugcourse" canonical="M.S.P.T">
+<variant base="Masters Programme In Sports Physiotheraphy"/>
+<variant base="MSPT"/>
+<variant base="M.S.P.T"/>
+</token>
+<token group="ugcourse" canonical="M.V.Sc">
+<variant base="Master of Veterinary Science"/>
+<variant base="MVSc"/>
+<variant base="M.V.Sc"/>
+</token>
+<token group="ugcourse" canonical="M.O.T">
+<variant base="Master of Occupational Theraphy"/>
+<variant base="MOT"/>
+<variant base="M.O.T"/>
+</token>
+<token group="ugcourse" canonical="PGDM">
+<variant base="P.G.D.M"/>
+<variant base="PGDM"/>
+</token>
+<token group="ugcourse" canonical="M.L.I.Sc">
+<variant base="Master of Library and Information Science"/>
+<variant base="MLISc"/>
+<variant base="M.L.I.Sc"/>
+</token>
+<token group="ugcourse" canonical="M.H.A">
+<variant base="Master of Hospital Administration"/>
+<variant base="MHA"/>
+<variant base="M.H.A"/>
+</token>
+<token group="ugcourse" canonical="M.B.A">
+<variant base="Master of Business Administration"/>
+<variant base="MBA"/>
+<variant base="M.B.A"/>
+</token>
+<token group="ugcourse" canonical="M.A.T.T">
+<variant base="Master of Arts in Theatre &amp; Television"/>
+<variant base="MATT"/>
+<variant base="M.A.T.T"/>
+</token>
+<token group="ugcourse" canonical="M.S">
+<variant base="Master of Science"/>
+<variant base="MS"/>
+<variant base="M.S"/>
+</token>
+<token group="ugcourse" canonical="M.H.M">
+<variant base="Master of Hospitality Management"/>
+<variant base="MHM"/>
+<variant base="M.H.M"/>
+</token>
+<token group="ugcourse" canonical="M.J">
+<variant base="Master of Journalism"/>
+<variant base="MJ"/>
+<variant base="M.J"/>
+</token>
+<token group="ugcourse" canonical="M.L">
+<variant base="Master of Laws"/>
+<variant base="ML"/>
+<variant base="M.L"/>
+</token>
+<token group="ugcourse" canonical="M.A">
+<variant base="Master of Arts"/>
+<variant base="MA"/>
+<variant base="M.A"/>
+</token>
+<token group="ugcourse" canonical="M.B.E">
+<variant base="Master of Business Economics"/>
+<variant base="MBE"/>
+<variant base="M.B.E"/>
+</token>
+<token group="ugcourse" canonical="M.D">
+<variant base="Doctor of Medicine"/>
+<variant base="MD"/>
+<variant base="M.D"/>
+</token>
+<token group="ugcourse" canonical="M.E">
+<variant base="Master of Engineering"/>
+<variant base="ME"/>
+<variant base="M.E"/>
+</token>
+<token group="ugcourse" canonical="PGD">
+<variant base="PGD"/>
+</token>
+<token group="ugcourse" canonical="M.H.T.M">
+<variant base="Masters of Hospitality and Tourism Management"/>
+<variant base="MHTM"/>
+<variant base="M.H.T.M"/>
+</token>
+<token group="ugcourse" canonical="M.A.P.M">
+<variant base="Master of Arts in Personal Management"/>
+<variant base="MAPM"/>
+<variant base="M.A.P.M"/>
+</token>
+<token group="ugcourse" canonical="PGP">
+<variant base="PGP"/>
+</token>
+<token group="ugcourse" canonical="M.T.M">
+<variant base="Master of Tourism Management"/>
+<variant base="MTM"/>
+<variant base="M.T.M"/>
+</token>
+<token group="ugcourse" canonical="M.Pharma">
+<variant base="Master of Pharmacy"/>
+<variant base="MPharma"/>
+<variant base="M.Pharma"/>
+</token>
+<token group="ugcourse" canonical="M.T.A">
+<variant base="Master of Tourism Administrations"/>
+<variant base="MTA"/>
+<variant base="M.T.A"/>
+</token>
+<token group="ugcourse" canonical="E.F.P.M">
+<variant base="Executive Fellow Program In Management"/>
+<variant base="EFPM"/>
+<variant base="E.F.P.M"/>
+</token>
+<token group="ugcourse" canonical="M.H.H.M">
+<variant base="Master of Hospitality &amp; Hotel Management"/>
+<variant base="MHHM"/>
+<variant base="M.H.H.M"/>
+</token>
+<token group="ugcourse" canonical="M.B.S">
+<variant base="Master of Business Studies"/>
+<variant base="MBS"/>
+<variant base="M.B.S"/>
+</token>
+<token group="ugcourse" canonical="M.P.Ed">
+<variant base="Master Of Physical Education"/>
+<variant base="MPEd"/>
+<variant base="M.P.Ed"/>
+</token>
+<token group="ugcourse" canonical="M.Com">
+<variant base="Master of Commerce"/>
+<variant base="MCom"/>
+<variant base="M.Com"/>
+</token>
+<token group="ugcourse" canonical="Mahir e Tibb">
+<variant base="Doctor of Medicine Unani"/>
+<variant base="Mahir e Tibb"/>
+</token>
+<token group="ugcourse" canonical="M.P.H">
+<variant base="Master of Public Health"/>
+<variant base="MPH"/>
+<variant base="M.P.H"/>
+</token>
+<token group="ugcourse" canonical="M.S.D">
+<variant base="Master of Social Dynamics"/>
+<variant base="MSD"/>
+<variant base="M.S.D"/>
+</token>
+<token group="ugcourse" canonical="M.P.M">
+<variant base="Master of Performance Management"/>
+<variant base="MPM"/>
+<variant base="M.P.M"/>
+</token>
+<token group="ugcourse" canonical="M.P.O">
+<variant base="M.P.O"/>
+<variant base="MPO"/>
+</token>
+<token group="ugcourse" canonical="M.P.A">
+<variant base="Master of Performing Arts"/>
+<variant base="MPA"/>
+<variant base="M.P.A"/>
+</token>
+<token group="ugcourse" canonical="M.P.E">
+<variant base="Master of Psychiatric Epidemiology"/>
+<variant base="MPE"/>
+<variant base="M.P.E"/>
+</token>
+<token group="ugcourse" canonical="M.S.W">
+<variant base="Master of Social Work"/>
+<variant base="MSW"/>
+<variant base="M.S.W"/>
+</token>
+<token group="ugcourse" canonical="PGPEX-VLM">
+<variant base="PGPEX-VLM"/>
+</token>
+<token group="ugcourse" canonical="E.M.P">
+<variant base="Executive Management Programme"/>
+<variant base="EMP"/>
+<variant base="E.M.P"/>
+</token>
+<token group="ugcourse" canonical="M.P.T">
+<variant base="Master of Physiotheraphy"/>
+<variant base="MPT"/>
+<variant base="M.P.T"/>
+</token>
+<token group="ugcourse" canonical="P.G.P">
+<variant base="P.G.P"/>
+<variant base="PGP"/>
+</token>
+</synonym>

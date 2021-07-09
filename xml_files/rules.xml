@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conceptSet xmlns="http://incubator.apache.org/uima/regex">
+
+	<variables>
+		<variable name="months"
+			value="january|february|march|april|may|june|july|august|september|october|november|december" />
+
+		<variable name="smonths"
+			value="jan|feb|mar|apr|may|jun|jul|aug|sept?|oct|nov|dec" />
+		
+		<variable name="dateTerm"
+			value="till|until|present|now|uptil|current|date|dates|onward|onwards|this" />
+	
+		<variable name="dateTermEnd"
+			value="present|now|current|onward|onwards|date|dates" />
+	
+		<variable name="dateTermBegin"
+			value="since|w\.e\.f\." />
+		<variable name="houseNumber"
+			value="houseno|house no|h no|flat no|flatno|plot no|plotno|residence no|residenceno" />
+		<variable name="company"
+			value="company|company name|organization|organizaton name" />	
+		<variable name="designation"
+			value="designation|desig|title|role|position|profile|post|job" />
+
+	</variables>
+
+	<concept name="emailAddressDetection">
+		<rules>
+			<rule regEx="([\w\d_\.\-]+)@([\w\d_\-]+)\.[a-zA-Z\.]{2,6}"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="emailAnnot" type="com.naukri.parse.type.resume.Email">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="localPart" type="String">$1</setFeature>
+				<setFeature name="domainPart" type="String">$2</setFeature>
+				<setFeature name="group" type="String">email</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+
+	<concept name="PhoneDetection">
+		<rules>
+			<rule regEx="\+?[0-9 \-]+?[0-9]{8,}" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" /> 
+			<rule regEx="\+?[0-9 \-]+?[0-9]{5,}\s*[0-9]{5,}" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+			<rule regEx="\+?[0-9]{5,}\s*[0-9]{5,}" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" /> 
+		</rules>
+		<createAnnotations>
+			<annotation id="PhoneAnnot" type="com.naukri.parse.type.resume.Phone">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">phone</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+	
+	<concept name="HouseNumberDetection">
+		<rules>
+			<rule regEx="\d{1,6}(\-|\\|\/)\d{1,6}" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" /> 
+			<rule regEx="\w{1,2}(\-|\\|\/)\d{1,6}" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />  
+			<rule regEx="\d{1,6}(\-|\\|\/)\w{1,2}" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" /> 
+			<rule regEx="(P\.?O\.?\s)((BOX)|(Box))(\s\d{1,6})" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" /> 
+			<rule regEx="(?i)\v{houseNumber}[^\w\d]+(.+)" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" /> 
+		</rules>
+		<createAnnotations>
+			<annotation id="HouseNumberAnnot" type="com.naukri.parse.type.resume.HouseNumber">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">houseNumber</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+
+	<concept name="PinCodeDetection">
+		<rules>
+			<rule regEx="\b[0-9]{6}\b" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" /> 
+			
+			<rule regEx="\b[0-9]{3}\s[0-9]{3}\b" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" /> 
+		</rules>
+		<createAnnotations>
+			<annotation id="PinCodeAnnot" type="com.naukri.parse.type.resume.PinCode">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">pinCode</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+
+	<concept name="DateDetection" processAllRules="true">
+		<rules>
+			<rule regEx="\b[0-9]{1,2}[\-\\\/\.][0-9]{1,2}[\-\\\/\.][0-9]{2,4}\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+			<rule
+				regEx="(?i)\b([0-9]{1,2})(st|nd|rd|th)?[^\w\d\n]+(\v{months}|\v{smonths})[^\w\d]+[0-9]{2,4}\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+			<rule
+				regEx="(?i)\b(\v{months}|\v{smonths})[^\w\d]+[0-9]{2}[^\w\d]+[0-9]{4}\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+			<rule
+				regEx="(?i)\b(\v{months}|\v{smonths})[^\w\d]*[0-9]{2,4}\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />		
+			<rule
+				regEx="\b(19|20)[0-9]{2}\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+				<rule
+				regEx="\b[0-9]{1,2}[\-\\\/\.][0-9]{4}\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+			<rule
+				regEx="(?i)\b((\v{dateTerm})\s*(\v{dateTerm}))\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="DateAnnot" type="com.naukri.parse.type.resume.Date">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">date</setFeature>				
+			</annotation>
+		</createAnnotations>
+	</concept>
+
+	  <concept name="DateRangeDetection" processAllRules="true">
+		<rules>
+			<rule
+				regEx="(?i)\b(\v{dateTermBegin})[^\w\d\n]*(\v{months}|\v{smonths})[^\w\d]+[0-9]{2}[^\w\d]+[0-9]{4}\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+			<rule
+				regEx="(?i)\b(\v{dateTermBegin})[^\w\d\n]*(\v{months}|\v{smonths})[^\w\d]*[0-9]{2,4}\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />		
+			
+			<rule
+				regEx="\b(\v{dateTermBegin})[^\w\d\n]*(19|20)[0-9]{2}\b"
+                matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+			<rule
+				regEx="(?i)\b(\v{months}|\v{smonths})[^\w\d]+[0-9]{2}[^\w\d]+[0-9]{4}[^\w\d\n]*(to|till|-)*[^\w\d\n]*(\v{dateTermEnd})\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+			<rule
+                regEx="(?i)\b([0-9]{1,2})(st|nd|rd|th)?[^\w\d\n]+(\v{months}|\v{smonths})[^\w\d]+[0-9]{2,4}[^\w\d\n]*(to|till|-)*[^\w\d\n]*(\v{dateTermEnd})\b"
+                matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+			<rule
+				regEx="(?i)\b(\v{months}|\v{smonths})[^\w\d]*[0-9]{2,4}[^\w\d\n]*(to|till|-)*[^\w\d\n]*(\v{dateTermEnd})\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />		
+			<rule
+				regEx="(?i)\b(19|20)[0-9]{2}[^\w\d\n]*(to|till|-)*[^\w\d\n]*(\v{dateTermEnd})\b"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="DateRangeAnnot" type="com.naukri.parse.type.resume.DateRange">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">daterange</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept> 
+
+	<concept name="ExpDetection" processAllRules="true">
+		<rules>
+		
+			<rule regEx="\b[0-9\.\+]+\s+y(ea)?rs?(\s*[0-9]{1,2}\s*months?)?\b" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+			<rule regEx="\b[0-9\.\+]+\s+y(ea)?r?(\s*[0-9]{1,2}\s*months?)?\b" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="ExpAnnot" type="com.naukri.parse.type.resume.Experience">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">experience</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+
+	<concept name="SalDetection" processAllRules="true">
+		<rules>
+			<rule regEx="(?i)([\d\.]+\s*la(c|kh)s?)\s+(and\s+)?(([\d\.]+\s+thou(sand)?))?"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="SalAnnot" type="com.naukri.parse.type.resume.Salary">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">salary</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+
+	<concept name="GenderDetection" processAllRules="true">
+		<rules>
+			<rule regEx="(?i)(gender|sex)[^\w\d]+(\b(fe)?male\b)"
+				matchStrategy="matchAll" matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="GenAnnot" type="com.naukri.parse.type.resume.Gender">
+				<begin group="2" />
+				<end group="2" />
+				<setFeature name="group" type="String">gender</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+
+	<concept name="NationalityDetection" processAllRules="true">
+		<rules>
+			<rule regEx="(?i)(nationality)[^\w\d]+(\w+)" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="NatAnnot" type="com.naukri.parse.type.resume.Nationality">
+				<begin group="2" />
+				<end group="2" />
+				<setFeature name="group" type="String">nationality</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+	
+	<concept name="MaritalDetection" processAllRules="true">
+		<rules>
+			<rule regEx="(?i)(marital[\s\-]+(status)?)[^\w\d]+(\w+)" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="MaritalAnnot" type="com.naukri.parse.type.resume.Marital">
+				<begin group="3" />
+				<end group="3" />
+				<setFeature name="group" type="String">marital</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+	
+	<concept name="AddressDetection" processAllRules="true">
+		<rules>
+			<rule regEx="(?i)(address)[^\w\d]+(.+)" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="AddressAnnot" type="com.naukri.parse.type.resume.Address">
+				<begin group="2" />
+				<end group="2" />
+				<setFeature name="group" type="String">address</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+<!--
+	<concept name="CompanyDetection" processAllRules="true">
+		<rules>
+			<rule regEx="(?i)(\v{company})\s*:\s*((.*?) (.*?) (.*?) (.*?))" matchStrategy="matchAll"
+			<rule regEx="(?i)(\v{company})[^\w\d]+(.+)" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="CompanyAnnot" type="com.naukri.parse.type.resume.Company">
+				<begin group="2" />
+				<end group="2" />
+				<setFeature name="group" type="String">company</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+	
+	<concept name="DesignationDetection" processAllRules="true">
+		<rules>
+
+			<rule regEx="(?i)(\v{designation})[^\w\d]+(.+)" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="DesignationAnnot" type="com.naukri.parse.type.resume.Title">
+				<begin group="2" />
+				<end group="2" />
+				<setFeature name="group" type="String">title</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+-->
+<!--  	<concept name="PercentageDetection" processAllRules="true">
+		<rules>
+			<rule regEx="[\d\.]+%" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+					<rule regEx="[\d\.]+\/[\d]+" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="PercentageAnnot" type="com.naukri.parse.type.resume.Percentage">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">percentage</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+	-->
+	
+
+<!--
+	<concept name="DegreeDetection" processAllRules="true">
+		<rules>
+			<rule regEx="\b(B|M)\.[\.\w]{1,7}\b" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="PGDegreeAnnot" type="com.naukri.parse.type.resume.Degree">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">degree</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+	
+	-->
+	
+	<concept name="NameDetection" processAllRules="true">
+		<rules>
+			<rule regEx="(?i)^[^\w\d]*\bname\s*:\s*(.+)" matchStrategy="matchAll"
+				matchType="uima.tcas.DocumentAnnotation" />
+		</rules>
+		<createAnnotations>
+			<annotation id="NameAnnot" type="com.naukri.parse.type.resume.Name">
+				<begin group="0" />
+				<end group="0" />
+				<setFeature name="group" type="String">name</setFeature>
+			</annotation>
+		</createAnnotations>
+	</concept>
+
+</conceptSet>
