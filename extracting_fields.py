@@ -61,33 +61,16 @@ name = extract_name(personal_segment)
 print("name = ", name)
 
 
-GRADUATION_REGEX = re.compile(r'\d{4}-\d{4}')
+# GRADUATION_REGEX = re.compile(r'\d{4}-\d{4}')
 
 
-def extract_graduation_year(text):
-    return re.findall(GRADUATION_REGEX, text)
+# def extract_graduation_year(text):
+#     return re.findall(GRADUATION_REGEX, text)
 
 
-graduation_year = extract_graduation_year(education_segment)
-print("graduation_year = ", graduation_year)
+# graduation_year = extract_graduation_year(education_segment)
+# print("graduation_year = ", graduation_year)
 
-
-# def extract_college(education_segment):
-#     college = ''
-#     education_segment = ' '.join([i.lower() for i in education_segment.split(' ')])
-#     # print("Education segment = ", education_segment)
-#     # print(type(education_segment))
-#     for institute in synonym_dict["institutes"]:
-#         # if re.search(institute, education_segment):
-#         #     college = institute
-#         #     break
-#         if institute in education_segment:
-#             college = institute
-#             # college = education_segment
-#             print(institute)
-#     return college
-
-# print(extract_college(education_segment))
 
 
 def extract_ug_course(education_segment):
@@ -103,4 +86,56 @@ def extract_ug_course(education_segment):
 
 
 ug_course = extract_ug_course(education_segment)
-print(ug_course)
+print("ug_course = ", ug_course)
+
+
+def extract_pg_course(education_segement):
+    pg_course = ''
+    for element in synonym_dict["pg_courses"]:
+        if re.search(r'\b' + element + r'\b', education_segment):
+            pg_course = element
+            break
+    return pg_course
+
+
+pg_course = extract_pg_course(education_segment)
+print("pg_course = ", pg_course)
+
+
+
+new_line=""
+def grad_education(education_segment):
+    global new_line
+    educations=education_segment.split('\n')
+    for i in range(len(educations)):
+        if ug_course in educations[i]:
+            ans=educations[i]
+            flag=1
+            not_ug_course = []
+            not_ug_course = synonym_dict["pg_courses"] + synonym_dict["matrix"]
+            for elem in not_ug_course:
+                if elem in educations[i+1]:
+                    flag=0
+                    break
+            if flag==1:
+                ans+=" "+educations[i+1]
+                new_line=educations[i+1]
+            break
+    return ans
+
+ans=grad_education(education_segment)
+# print("------",ans,"------")
+YEAR_REG=re.compile(r'\d{4}')
+def grad_year(text):
+    return re.findall(YEAR_REG, text)
+year=grad_year(ans)
+print("Grad year",year)
+
+years="".join(year)
+nans=ans.replace(ug_course," ")
+nnans=nans.replace(years," ")
+try:
+    college=nnans.split("from",1)[1]
+    print("College name->",nnans.split("from",1)[1])
+except:
+    print(new_line)
