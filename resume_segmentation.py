@@ -2,12 +2,16 @@ import docx
 from docx.opc.constants import RELATIONSHIP_TYPE as RT
 import docx2txt
 from data import synonym_dict
+import os
 
 
 level_from_style_name = {f'Heading {i}': f'<H{i}>' for i in range(10)}
 
-
-filename = '/home/kanay/Documents/sample.docx'
+filename = os.path.join(os.getcwd(), 'sample_resumes/sample.docx')
+# filename = os.path.join(os.getcwd(), 'sample_resumes/NeerajAgnihotri.docx')
+# filename = os.path.join(os.getcwd(), 'sample_resumes/akshat.docx')
+# filename = os.path.join(os.getcwd(), 'sample_resumes/Nitish_Bansal_Resume.docx')
+# filename = os.path.join(os.getcwd(), 'sample_resumes/ResumeTarnijaSrivastava.docx')
 
 d = docx.Document(filename)
 
@@ -32,9 +36,6 @@ colors = []
 color_dict = {}
 font_dict = {}
 font_size_dict = {}
-
-
-rels = d.part.rels
 
 
 for para in d.paragraphs:
