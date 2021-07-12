@@ -13,13 +13,18 @@ EMAIL_REG = re.compile(r'[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+')
 
 
 def extract_phone_number(personal_segment):
-    phone = re.findall(PHONE_REG, personal_segment)
-    if phone:
-        number = ''.join(phone[0])
+    try:
+        phone = ''
+        phone = re.findall(PHONE_REG, personal_segment)
+        if phone:
+            number = ''.join(phone[0])
 
-        if personal_segment.find(number) >= 0 and len(number) < 16:
-            return number
-    return None
+            if personal_segment.find(number) >= 0 and len(number) < 16:
+                return number
+        return None
+    except Exception as e:
+        print("error occured in finding phone number")
+        return phone
 
 
 mobile_number = extract_phone_number(personal_segment)
@@ -27,7 +32,13 @@ print("mobile number = ", mobile_number)
 
 
 def extract_emails(personal_segment):
-    return re.findall(EMAIL_REG, personal_segment)[0]
+    try:
+        email = ''
+        email =  re.findall(EMAIL_REG, personal_segment)[0]
+        return email
+    except Exception as e:
+        print("error occured at finding emails")
+        return email
 
 
 email = extract_emails(personal_segment)
@@ -42,20 +53,24 @@ matcher = Matcher(nlp.vocab)
 
 
 def extract_name(resume_text):
+    try:
+        nlp_text = nlp(resume_text)
 
-    nlp_text = nlp(resume_text)
+        # First name and Last name are always Proper Nouns
+        pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
 
-    # First name and Last name are always Proper Nouns
-    pattern = [{'POS': 'PROPN'}, {'POS': 'PROPN'}]
+        matcher.add('NAME', [pattern])
 
-    matcher.add('NAME', [pattern])
+        matches = matcher(nlp_text)
 
-    matches = matcher(nlp_text)
-
-    for match_id, start, end in matches:
-        span = nlp_text[start:end]
-        return span.text
-
+        name_list = []
+        for match_id, start, end in matches:
+            span = nlp_text[start:end]
+            name_list.append(span.text)
+        return name_list[0]
+    except Exception as e:
+        print("error occured in finding name")
+        return name_list
 
 name = extract_name(personal_segment)
 print("name = ", name)
@@ -74,24 +89,32 @@ print("name = ", name)
 
 
 def extract_ug_course(education_segment):
-    ug_course = ''
-    for element in synonym_dict["ug_courses"]:
-        if re.search(r'\b' + element + r'\b', education_segment):
-            ug_course = element
-            break
-    return ug_course
+    try:
+        ug_course = ''
+        for element in synonym_dict["ug_courses"]:
+            if re.search(r'\b' + element + r'\b', education_segment):
+                ug_course = element
+                break
+        return ug_course
+    except Exception as e:
+        print("error occur in finding ug course")
+        return ug_course
 
 
 ug_course = extract_ug_course(education_segment)
 
 
 def extract_pg_course(education_segement):
-    pg_course = ''
-    for element in synonym_dict["pg_courses"]:
-        if re.search(r'\b' + element + r'\b', education_segment):
-            pg_course = element
-            break
-    return pg_course
+    try:
+        pg_course = ''
+        for element in synonym_dict["pg_courses"]:
+            if re.search(r'\b' + element + r'\b', education_segment):
+                pg_course = element
+                break
+        return pg_course
+    except Exception as e:
+        print("error occured in finding pg course")
+        return pg_course
 
 
 pg_course = extract_pg_course(education_segment)
@@ -100,22 +123,27 @@ pg_course = extract_pg_course(education_segment)
 ug_line=""
 def ug_education(education_segment):
     global ug_line
-    educations=education_segment.split('\n')
-    for i in range(len(educations)):
-        if ug_course in educations[i]:
-            ans=educations[i]
-            flag=1
-            not_ug_course = []
-            not_ug_course = synonym_dict["pg_courses"] + synonym_dict["matrix"]
-            for elem in not_ug_course:
-                if elem in educations[i+1]:
-                    flag=0
-                    break
-            if flag==1:
-                ans+=" "+educations[i+1]
-                ug_line=educations[i+1]
-            break
-    return ans
+    ans = ''
+    try:
+        educations=education_segment.split('\n')
+        for i in range(len(educations)):
+            if ug_course in educations[i]:
+                ans=educations[i]
+                flag=1
+                not_ug_course = []
+                not_ug_course = synonym_dict["pg_courses"] + synonym_dict["matrix"]
+                for elem in not_ug_course:
+                    if elem in educations[i+1]:
+                        flag=0
+                        break
+                if flag==1:
+                    ans+=" "+educations[i+1]
+                    ug_line=educations[i+1]
+                break
+        return ans
+    except Exception as e:
+        print("error occur in finding ug_line")
+        return ans
 
 ans=ug_education(education_segment)
 # print("------",ans,"------")
@@ -139,22 +167,27 @@ print("UG college = ",ans)
 pg_line=""
 def pg_education(education_segment):
     global pg_line
-    educations=education_segment.split('\n')
-    for i in range(len(educations)):
-        if pg_course in educations[i]:
-            ans=educations[i]
-            flag=1
-            not_pg_course = []
-            not_pg_course = synonym_dict["ug_courses"] + synonym_dict["matrix"]
-            for elem in not_pg_course:
-                if elem in educations[i+1]:
-                    flag=0
-                    break
-            if flag==1:
-                ans+=" "+educations[i+1]
-                pg_line=educations[i+1]
-            break
-    return ans
+    ans = ''
+    try:
+        educations=education_segment.split('\n')
+        for i in range(len(educations)):
+            if pg_course in educations[i]:
+                ans=educations[i]
+                flag=1
+                not_pg_course = []
+                not_pg_course = synonym_dict["ug_courses"] + synonym_dict["matrix"]
+                for elem in not_pg_course:
+                    if elem in educations[i+1]:
+                        flag=0
+                        break
+                if flag==1:
+                    ans+=" "+educations[i+1]
+                    pg_line=educations[i+1]
+                break
+        return ans
+    except Exception as e:
+        print("error occur in finding pg_line")
+        return ans
 
 ans=pg_education(education_segment)
 # print("------",ans,"------")
