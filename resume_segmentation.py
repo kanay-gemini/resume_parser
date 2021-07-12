@@ -3,15 +3,16 @@ from docx.opc.constants import RELATIONSHIP_TYPE as RT
 import docx2txt
 from data import synonym_dict
 import os
+import re
 
 
 level_from_style_name = {f'Heading {i}': f'<H{i}>' for i in range(10)}
 
 filename = os.path.join(os.getcwd(), 'sample_resumes/sample.docx')
-# filename = os.path.join(os.getcwd(), 'sample_resumes/NeerajAgnihotri.docx')
-# filename = os.path.join(os.getcwd(), 'sample_resumes/akshat.docx')
-# filename = os.path.join(os.getcwd(), 'sample_resumes/Nitish_Bansal_Resume.docx')
-# filename = os.path.join(os.getcwd(), 'sample_resumes/ResumeTarnijaSrivastava.docx')
+filename = os.path.join(os.getcwd(), 'sample_resumes/NeerajAgnihotri.docx')
+filename = os.path.join(os.getcwd(), 'sample_resumes/Nitish_Bansal_Resume.docx')
+filename = os.path.join(os.getcwd(), 'sample_resumes/ResumeTarnijaSrivastava.docx')
+
 
 d = docx.Document(filename)
 
@@ -23,15 +24,12 @@ education_segment = ''
 professional_segment = ''
 skills_segment = ''
 
-full_text = []
 bold = []
 h1 = []
 h2 = []
 h3 = []
 h4 = []
 italic = []
-normal = []
-body_text = []
 colors = []
 color_dict = {}
 font_dict = {}
@@ -39,13 +37,7 @@ font_size_dict = {}
 
 
 for para in d.paragraphs:
-    if para.style.name not in level_from_style_name:
-        if para.style.name == "Normal":
-            normal.append(para.text)
-        if para.style.name == "Body Text":
-            body_text.append(para.text)
-        full_text.append(para.text)
-    else:
+    if para.style.name in level_from_style_name:
         level = level_from_style_name[para.style.name]
         if level == "<H1>":
             h1.append(para.text)
@@ -61,8 +53,8 @@ for para in d.paragraphs:
             bold.append(run.text)
         if run.italic:
             italic.append(run.text)
-        if run.font.color.rgb is not None:
-            colors.append(run.font.color.rgb)
+        # if run.font.color.rgb is not None:
+        #     colors.append(run.font.color.rgb)
             # print("colors = ", colors)
 
     for run in para.runs:
@@ -157,16 +149,24 @@ elif count == maximum:
 else:
     pass
 
+if count == maximum:
+    HEADERS_OF_RESUME = font_dict_header
 
 print("HEADERS_OF_RESUME = ", HEADERS_OF_RESUME)
 
 
-# def extract_text_from_doc(filename):
-#     d = docx.Document(filename)
-#     complete_text = []
-#     for para in d.paragraphs:
-#         complete_text.append(para.text)
-#     return '\n'.join(complete_text)
+
+NEW_HEADERS = []
+for heading in HEADERS_OF_RESUME:
+    heading = heading.strip()
+    if len(heading) > 3:
+        if heading != '' and heading != '\t' and heading != ':':
+            NEW_HEADERS.append(heading)
+
+print("\n new headings = ", NEW_HEADERS)
+
+HEADERS_OF_RESUME = NEW_HEADERS
+
 
 def extract_text_from_doc(filename):
     temp = docx2txt.process(filename)
@@ -187,7 +187,6 @@ def text_between_various_headings():
     personal_segment = complete_page_text.split(HEADERS_OF_RESUME[0])[0]
 
 
-    # print("personal segment = {}".format(personal_segment))
     for i in range(length-1):
         if HEADERS_OF_RESUME[i].lower() in synonym_dict["career_objective"]:
             career_objective_segment = complete_page_text.split(
@@ -200,6 +199,16 @@ def text_between_various_headings():
             skills_segment = complete_page_text.split(HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
         else:
             pass
+    
+    if((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["career_objective"])):
+        career_objective_segment =complete_page_text.split(HEADERS_OF_RESUME[length-1])[1]
+    if((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["education"])):
+        education_segment =complete_page_text.split(HEADERS_OF_RESUME[length-1])[1]
+    if((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["professional_experience"])):
+        professional_segment =complete_page_text.split(HEADERS_OF_RESUME[length-1])[1]
+    if((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["skills"])):
+        skills_segment =complete_page_text.split(HEADERS_OF_RESUME[length-1])[1]
+
 
 text_between_various_headings()
 
