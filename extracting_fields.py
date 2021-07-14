@@ -8,7 +8,7 @@ import csv
 from data import synonym_dict
 
 
-PHONE_REG = re.compile(r'[\+\(]?[1-9][0-9 .\-\(\)]{8,}[0-9]')
+PHONE_REG = re.compile(r'\+?[0-9 \-]+?[0-9]{8,}')
 EMAIL_REG = re.compile(r'[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+')
 
 
