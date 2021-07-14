@@ -40,7 +40,12 @@ for para in d.paragraphs:
     if para.style.name in level_from_style_name:
         level = level_from_style_name[para.style.name]
         if level == "<H1>":
-            h1.append(para.text)
+            text=para.text
+            new=""
+            for char in text:
+                if char.isalpha() or char==" ":
+                    new+=char
+            h1.append(new)
         if level == "<H2>":
             h2.append(para.text)
         if level == "<H3>":
@@ -50,7 +55,12 @@ for para in d.paragraphs:
 
     for run in para.runs:
         if run.bold:
-            bold.append(run.text)
+            text=run.text
+            new=""
+            for char in text:
+                if char.isalpha() or char==" ":
+                    new+=char
+            bold.append(new)
         if run.italic:
             italic.append(run.text)
         # if run.font.color.rgb is not None:
@@ -132,6 +142,7 @@ for values_list in list(font_dict.values()):
                 font_dict_header = values_list
 print("no_of_headings_in_font_size = ", no_of_headings_in_font_size)
 
+print(no_of_headings_in_bold, no_of_headings_in_h1,no_of_headings_in_h2, no_of_headings_in_h3, count)
 header_list_count = [no_of_headings_in_bold, no_of_headings_in_h1,
                      no_of_headings_in_h2, no_of_headings_in_h3, count]
 maximum = max(header_list_count)
@@ -152,7 +163,7 @@ else:
 if count == maximum:
     HEADERS_OF_RESUME = font_dict_header
 
-print("HEADERS_OF_RESUME = ", HEADERS_OF_RESUME)
+# print("HEADERS_OF_RESUME = ", HEADERS_OF_RESUME)
 
 
 
@@ -163,10 +174,9 @@ for heading in HEADERS_OF_RESUME:
         if heading != '' and heading != '\t' and heading != ':':
             NEW_HEADERS.append(heading)
 
-print("\n new headings = ", NEW_HEADERS)
 
 HEADERS_OF_RESUME = NEW_HEADERS
-
+print("Headers of resume=",HEADERS_OF_RESUME)
 
 def extract_text_from_doc(filename):
     temp = docx2txt.process(filename)
@@ -184,30 +194,49 @@ def text_between_various_headings():
     global professional_segment
     global skills_segment
 
+    flag=0
     personal_segment = complete_page_text.split(HEADERS_OF_RESUME[0])[0]
-
+    if personal_segment:
+        flag=1
 
     for i in range(length-1):
-        if HEADERS_OF_RESUME[i].lower() in synonym_dict["career_objective"]:
+        if HEADERS_OF_RESUME[i].lower() in synonym_dict["personal details"]:
+            if flag==1:
+                personal_segment+=complete_page_text.split(
+                HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
+            else:
+                personal_segment = complete_page_text.split(
+                HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
+        elif HEADERS_OF_RESUME[i].lower() in synonym_dict["career_objective"]:
             career_objective_segment = complete_page_text.split(
                 HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
         elif HEADERS_OF_RESUME[i].lower() in synonym_dict["education"]:
-            education_segment = complete_page_text.split(HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
+            education_segment = complete_page_text.split(
+                HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
         elif HEADERS_OF_RESUME[i].lower() in synonym_dict["professional_experience"]:
-            professional_segment = complete_page_text.split(HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
+            professional_segment = complete_page_text.split(
+                HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
         elif HEADERS_OF_RESUME[i].lower() in synonym_dict["skills"]:
-            skills_segment = complete_page_text.split(HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
+            skills_segment = complete_page_text.split(
+                HEADERS_OF_RESUME[i])[1].split(HEADERS_OF_RESUME[i+1])[0]
         else:
             pass
     
     if((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["career_objective"])):
         career_objective_segment =complete_page_text.split(HEADERS_OF_RESUME[length-1])[1]
-    if((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["education"])):
+    elif((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["education"])):
         education_segment =complete_page_text.split(HEADERS_OF_RESUME[length-1])[1]
-    if((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["professional_experience"])):
+    elif((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["professional_experience"])):
         professional_segment =complete_page_text.split(HEADERS_OF_RESUME[length-1])[1]
-    if((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["skills"])):
+    elif((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["skills"])):
         skills_segment =complete_page_text.split(HEADERS_OF_RESUME[length-1])[1]
+    elif((i==length-2) and (HEADERS_OF_RESUME[length-1].lower() in synonym_dict["personal details"])):
+        if flag==1:
+            personal_segment+=complete_page_text.split(
+            HEADERS_OF_RESUME[length-1])[1]
+        else:
+            personal_segment = complete_page_text.split(
+            HEADERS_OF_RESUME[length-1])[1]
 
 
 text_between_various_headings()
