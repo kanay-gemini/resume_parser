@@ -1,17 +1,17 @@
 import docx
-from docx.opc.constants import RELATIONSHIP_TYPE as RT
 import docx2txt
 from data import synonym_dict
 import os
 import re
+import argparse
 
 
 level_from_style_name = {f'Heading {i}': f'<H{i}>' for i in range(10)}
 
-filename = os.path.join(os.getcwd(), 'sample_resumes/sample.docx')
-filename = os.path.join(os.getcwd(), 'sample_resumes/NeerajAgnihotri.docx')
-filename = os.path.join(os.getcwd(), 'sample_resumes/Nitish_Bansal_Resume.docx')
-filename = os.path.join(os.getcwd(), 'sample_resumes/ResumeTarnijaSrivastava.docx')
+parser = argparse.ArgumentParser()
+parser.add_argument('filename', type=str, help='give the complete path of the resume')
+args = parser.parse_args()
+filename = os.path.join(os.getcwd(), '{}'.format(args.filename))
 
 
 d = docx.Document(filename)
