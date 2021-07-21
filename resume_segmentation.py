@@ -182,9 +182,7 @@ for heading in HEADERS_OF_RESUME:
         if heading != '' and heading != '\t' and heading != ':':
             NEW_HEADERS.append(heading)
 
-
 HEADERS_OF_RESUME = NEW_HEADERS
-print("Headers of resume=",HEADERS_OF_RESUME)
 
 def extract_text_from_doc(filename):
     temp = docx2txt.process(filename)
@@ -193,6 +191,26 @@ def extract_text_from_doc(filename):
 
 complete_page_text = extract_text_from_doc(filename)
 
+headers=0
+for header in HEADERS_OF_RESUME:
+    if header.lower() in synonym_dict["main_headings"]:
+        headers+=1
+if headers<3:
+    all_lines=complete_page_text.split('\n')
+    HEADERS_OF_RESUME=all_lines
+    NEW_HEADERS=[]
+    for header in HEADERS_OF_RESUME:
+        if all(chr.isalpha() or chr.isspace() for chr in header) and len(header.split())<=3 and len(header.split())>=1:
+            header=header.strip()
+            NEW_HEADERS.append(header)
+    HEADERS_OF_RESUME=NEW_HEADERS
+    LAST=[]
+    for header in HEADERS_OF_RESUME:
+        if header.lower() in synonym_dict["main_headings"]:
+            LAST.append(header)
+    HEADERS_OF_RESUME=LAST
+
+print("Headers of resume=",HEADERS_OF_RESUME)
 
 def text_between_various_headings():
     length = len(HEADERS_OF_RESUME)
@@ -203,7 +221,10 @@ def text_between_various_headings():
     global skills_segment
 
     flag=0
-    personal_segment = complete_page_text.split(HEADERS_OF_RESUME[0])[0]
+    for header in HEADERS_OF_RESUME:
+        if header.lower() in synonym_dict["main_headings"]:
+            personal_segment = complete_page_text.split(header)[0]
+            break
     if personal_segment:
         flag=1
 
