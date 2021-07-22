@@ -153,16 +153,15 @@ def grad_year(text):
 year=grad_year(ans)
 print("UG degree = ",ug_course)
 print("UG year = ",year)
-print("UG college = ",ans)
 
-# years="".join(year)
-# nans=ans.replace(ug_course," ")
-# nnans=nans.replace(years," ")
-# try:
-#     college=nnans.split("from",1)[1]
-#     print("College name->",nnans.split("from",1)[1])
-# except:
-#     print(ug_line)
+years="".join(year)
+nans=ans.replace(ug_course," ")
+nnans=nans.replace(years," ")
+try:
+    college=nnans.split("from",1)[1]
+    print("UG college = ",nnans.split("from",1)[1])
+except:
+    print("UG college = ", ans)
 
 pg_line=""
 def pg_education(education_segment):
@@ -190,14 +189,22 @@ def pg_education(education_segment):
         return ans
 
 ans=pg_education(education_segment)
-# print("------",ans,"------")
 YEAR_REG=re.compile(r'\d{4}')
 def grad_year(text):
     return re.findall(YEAR_REG, text)
 year=grad_year(ans)
 print("PG degree = ",pg_course)
 print("PG year = ",year)
-print("PG college = ",ans)
+
+years="".join(year)
+nans=ans.replace(ug_course," ")
+nnans=nans.replace(years," ")
+try:
+    college=nnans.split("from",1)[1]
+    print("PG college = ",nnans.split("from",1)[1])
+except:
+    print("PG college = ", ans)
+
 
 
 # def extract_college(education_segment):
