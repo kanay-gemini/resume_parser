@@ -10,8 +10,9 @@ from data import synonym_dict
 PHONE_REG = re.compile(r'\+?[0-9 \-]+?[0-9]{8,}')
 EMAIL_REG = re.compile(r'[a-zA-Z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+')
 DATE_REG = re.compile(r'\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)) ([0-9]{4})')
+dict={"Jan":1,"Feb":2,"Mar":3,"Apr":4,"May":5,"Jun":6,"Jul":7,"Aug":8,"Sept":9,"Oct":10,"Nov":11,"Dec":12,"January":1,"February":2,"March":3,"April":4,"May":5,"June":6,"July":7,"August":8,"September":9,"October":10,"November":11,"December":12}
 
-print(re.findall(DATE_REG, professional_segment))
+# print(re.findall(DATE_REG, professional_segment))
 
 def extract_phone_number(personal_segment):
     try:
@@ -223,3 +224,24 @@ except:
 #     return college
 
 # print(extract_college(ans))
+
+
+def experience(professional_segment):
+    all_lines=professional_segment.split('\n')
+    all_exp=[]
+    for line in all_lines:
+        year=[]
+        year=re.findall(DATE_REG, line)
+        all_exp.append(year)
+    # print(all_exp)
+    months=0
+    for exp in all_exp:
+        if len(exp)==2:
+            # print(exp[0],exp[1])
+            if dict[exp[0][0]]<=dict[exp[1][0]]:
+                months+=(int(exp[1][1])-int(exp[0][1]))*12 + dict[exp[1][0]]-dict[exp[0][0]]
+            else:
+                months+=(int(exp[1][1])-int(exp[0][1]))*12 - dict[exp[0][0]]-dict[exp[1][0]]
+    return months/12
+
+print(experience(professional_segment))
