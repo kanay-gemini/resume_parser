@@ -9,7 +9,7 @@ from data import synonym_dict
 
 
 PHONE_REG = re.compile(r'\+?[0-9 \-]+?[0-9]{8,}')
-EMAIL_REG = re.compile(r'[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+')
+EMAIL_REG = re.compile(r'[a-zA-Z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+')
 
 
 def extract_phone_number(personal_segment):
@@ -37,8 +37,7 @@ def extract_emails(personal_segment):
         email =  re.findall(EMAIL_REG, personal_segment)[0]
         return email
     except Exception as e:
-        print("error occured at finding emails")
-        return email
+        return re.findall(re.compile(r'[a-zA-Z0-9\.\-+_]+@?[a-z0-9\.\-+_]+\.[a-z]+'),personal_segment)
 
 
 email = extract_emails(personal_segment)
