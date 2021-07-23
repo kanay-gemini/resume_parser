@@ -7,10 +7,11 @@ from nltk.corpus import stopwords
 import csv
 from data import synonym_dict
 
-
 PHONE_REG = re.compile(r'\+?[0-9 \-]+?[0-9]{8,}')
 EMAIL_REG = re.compile(r'[a-zA-Z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+')
+DATE_REG = re.compile(r'\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)) ([0-9]{4})')
 
+print(re.findall(DATE_REG, professional_segment))
 
 def extract_phone_number(personal_segment):
     try:
