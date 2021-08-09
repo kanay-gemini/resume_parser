@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Result
+{% endblock %}
+
+{% block content %}
+    <h1>Result Table</h1><br><br><br>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>UG Degree</th>
+            <th>UG Year</th>
+            <th>UG College</th>
+            <th>PG Degree</th>
+            <th>PG Year</th>
+            <th>PG College</th>
+            <th>Last Company</th>
+            <th>Experience</th>
+        </tr>
+        {% for person in resultant_list %}
+        <tr>
+            <td>{{ person["Name"] }}</td>
+            <td>{{ person["Email"] }}</td>
+            <td>{{ person["Phone"] }}</td>
+            <td>{{ person["UG Degree"] }}</td>
+            <td>{{ person["UG Year"] }}</td>
+            <td>{{ person["UG College"] }}</td>
+            <td>{{ person["PG Degree"] }}</td>
+            <td>{{ person["PG Year"] }}</td>
+            <td>{{ person["PG College"] }}</td>
+            <td>{{ person["Last Company"] }}</td>
+            <td>{{ person["Experience"] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
