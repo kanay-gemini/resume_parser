@@ -145,12 +145,6 @@ def h3_headings(h3, synonym_dict):
         return no_of_headings_in_h3
 
 
-count_size = 0
-count_color = 0
-font_dict_header = []
-color_dict_header = []
-
-
 def font_size(font_dict, synonym_dict):
     no_of_headings_in_font_size = 0
     font_dict_header = []
