@@ -1,18 +1,14 @@
-from resume_segmentation import personal_segment, education_segment, professional_segment, skills_segment
 import re
 import spacy
 from spacy.matcher import Matcher
-import nltk
-from nltk.corpus import stopwords
-import csv
 from data import synonym_dict
+
 
 PHONE_REG = re.compile(r'\+?[0-9 \-]+?[0-9]{8,}')
 EMAIL_REG = re.compile(r'[a-zA-Z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+')
 DATE_REG = re.compile(r'\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)) ([0-9]{4})')
-dict={"Jan":1,"Feb":2,"Mar":3,"Apr":4,"May":5,"Jun":6,"Jul":7,"Aug":8,"Sept":9,"Oct":10,"Nov":11,"Dec":12,"January":1,"February":2,"March":3,"April":4,"May":5,"June":6,"July":7,"August":8,"September":9,"October":10,"November":11,"December":12}
-
-# print(re.findall(DATE_REG, professional_segment))
+dict={"Jan":1,"Feb":2,"Mar":3,"Apr":4,"May":5,"Jun":6,"Jul":7,"Aug":8,"Sep":9,"Sept":9,"Oct":10,"Nov":11,"Dec":12,"January":1,"February":2,"March":3,"April":4,"May":5,"June":6,"July":7,"August":8,"September":9,"October":10,"November":11,"December":12}
+YEAR_REG=re.compile(r'\d{4}')
 
 def extract_phone_number(personal_segment):
     try:
@@ -29,32 +25,33 @@ def extract_phone_number(personal_segment):
         return phone
 
 
-mobile_number = extract_phone_number(personal_segment)
-print("mobile number = ", mobile_number)
-
-
 def extract_emails(personal_segment):
+    email = ''
     try:
-        email = ''
-        email =  re.findall(EMAIL_REG, personal_segment)[0]
-        return email
+        email =  re.findall(EMAIL_REG, personal_segment)
+        if email:
+            return email[0]
+        else:
+            email = re.findall(re.compile(r'[a-zA-Z0-9\.\-+_]+@?[a-z0-9\.\-+_]+\.[a-z]+'),personal_segment)
+            if email:
+                return email[0]
+            else:
+                raise Exception
     except Exception as e:
-        return re.findall(re.compile(r'[a-zA-Z0-9\.\-+_]+@?[a-z0-9\.\-+_]+\.[a-z]+'),personal_segment)
-
-
-email = extract_emails(personal_segment)
-print("email = ", email)
-
-
-# load pre-trained model
-nlp = spacy.load('en_core_web_sm')
-
-# initialize matcher with a vocab
-matcher = Matcher(nlp.vocab)
+        email = ''
+        print("error occured in finding email")
+        return email
 
 
 def extract_name(resume_text):
+    name = ''
     try:
+        # load pre-trained model
+        nlp = spacy.load('en_core_web_sm')
+
+        # initialize matcher with a vocab
+        matcher = Matcher(nlp.vocab)
+
         nlp_text = nlp(resume_text)
 
         # First name and Last name are always Proper Nouns
@@ -68,25 +65,16 @@ def extract_name(resume_text):
         for match_id, start, end in matches:
             span = nlp_text[start:end]
             name_list.append(span.text)
-        return name_list[0]
+        false_word_list = ['curriculum vitae', 'CURRICULUM VITAE', 'Curriculum Vitae', 'resume', 'RESUME', 'Resume']
+        for word in false_word_list:
+            if word in name_list:
+                name_list.remove(word)
+        name = name_list[0]
+        return name
     except Exception as e:
+        name = ''
         print("error occured in finding name")
-        return name_list
-
-name = extract_name(personal_segment)
-print("name = ", name)
-
-
-# GRADUATION_REGEX = re.compile(r'\d{4}-\d{4}|\d{4}')
-
-
-# def extract_graduation_year(text):
-#     return re.findall(GRADUATION_REGEX, text)
-
-
-# graduation_year = extract_graduation_year(education_segment)
-# print("graduation_year = ", graduation_year)
-
+        return name
 
 
 def extract_ug_course(education_segment):
@@ -98,14 +86,15 @@ def extract_ug_course(education_segment):
                 break
         return ug_course
     except Exception as e:
+        ug_course = ''
         print("error occur in finding ug course")
         return ug_course
 
 
-ug_course = extract_ug_course(education_segment)
+# ug_course = extract_ug_course(education_segment)
 
 
-def extract_pg_course(education_segement):
+def extract_pg_course(education_segment):
     try:
         pg_course = ''
         for element in synonym_dict["pg_courses"]:
@@ -114,16 +103,13 @@ def extract_pg_course(education_segement):
                 break
         return pg_course
     except Exception as e:
+        # pg_course = ''
         print("error occured in finding pg course")
         return pg_course
 
 
-pg_course = extract_pg_course(education_segment)
-
-
-ug_line=""
-def ug_education(education_segment):
-    global ug_line
+def ug_education(education_segment, ug_course):
+    ug_line=""
     ans = ''
     try:
         educations=education_segment.split('\n')
@@ -143,30 +129,42 @@ def ug_education(education_segment):
                 break
         return ans
     except Exception as e:
+        ans = ''
         print("error occur in finding ug_line")
         return ans
 
-ans=ug_education(education_segment)
-# print("------",ans,"------")
-YEAR_REG=re.compile(r'\d{4}')
+
 def grad_year(text):
-    return re.findall(YEAR_REG, text)
-year=grad_year(ans)
-print("UG degree = ",ug_course)
-print("UG year = ",year)
+    try:
+        year_of_graduation = ''
+        graduation_year =  re.findall(YEAR_REG, text)
+        if len(graduation_year) == 2:
+            year_of_graduation = graduation_year[0] + "-" + graduation_year[1]
+        elif len(graduation_year) == 1:
+            year_of_graduation = graduation_year[0]
+        else:
+            year_of_graduation = ''
+        return year_of_graduation
+    except Exception as e:
+        year_of_graduation = ''
+        return year_of_graduation
 
-years="".join(year)
-nans=ans.replace(ug_course," ")
-nnans=nans.replace(years," ")
-try:
-    college=nnans.split("from",1)[1]
-    print("UG college = ",nnans.split("from",1)[1])
-except:
-    print("UG college = ", ans)
 
-pg_line=""
-def pg_education(education_segment):
-    global pg_line
+def ug_college(ug_course, ug_line, ug_year):
+    try:
+        years="".join(ug_year)
+        nans=ug_line.replace(ug_course," ")
+        nnans=nans.replace(years," ")
+        college=nnans.split("from",1)[1]
+        # print("UG college = ",nnans.split("from",1)[1])
+        return college
+    except:
+        # print("UG college = ", ug_line)
+        return ug_line
+
+
+def pg_education(education_segment, pg_course):
+    pg_line=""
     ans = ''
     try:
         educations=education_segment.split('\n')
@@ -189,59 +187,31 @@ def pg_education(education_segment):
         print("error occur in finding pg_line")
         return ans
 
-ans=pg_education(education_segment)
-YEAR_REG=re.compile(r'\d{4}')
-def grad_year(text):
-    return re.findall(YEAR_REG, text)
-year=grad_year(ans)
-print("PG degree = ",pg_course)
-print("PG year = ",year)
 
-years="".join(year)
-nans=ans.replace(ug_course," ")
-nnans=nans.replace(years," ")
-try:
-    college=nnans.split("from",1)[1]
-    print("PG college = ",nnans.split("from",1)[1])
-except:
-    print("PG college = ", ans)
-
+def post_grad_year(text):
+    try:
+        year_of_post_graduation = ''
+        graduation_year =  re.findall(YEAR_REG, text)
+        if len(graduation_year) == 2:
+            year_of_post_graduation = graduation_year[0] + "-" + graduation_year[1]
+        elif len(graduation_year) == 1:
+            year_of_post_graduation = graduation_year[0]
+        else:
+            year_of_post_graduation = ''
+        return year_of_post_graduation
+    except Exception as e:
+        year_of_post_graduation = ''
+        return year_of_post_graduation
 
 
-# def extract_college(education_segment):
-#     college = ''
-#     education_segment = ' '.join([i.lower() for i in education_segment.split(' ')])
-#     # education_segment = "dev bhoomi institute of technology"
-#     print("Education segment = ", education_segment)
-#     # print(type(education_segment))
-#     for institute in synonym_dict["institutes"]:
-#         # if re.search(r'\b' + institute + r'\b', education_segment, re.IGNORECASE):
-#         #     college = institute
-#         #     break
-#         if institute in education_segment:
-#             college = institute
-#             # print(institute)
-#     return college
-
-# print(extract_college(ans))
-
-
-def experience(professional_segment):
-    all_lines=professional_segment.split('\n')
-    all_exp=[]
-    for line in all_lines:
-        year=[]
-        year=re.findall(DATE_REG, line)
-        all_exp.append(year)
-    # print(all_exp)
-    months=0
-    for exp in all_exp:
-        if len(exp)==2:
-            # print(exp[0],exp[1])
-            if dict[exp[0][0]]<=dict[exp[1][0]]:
-                months+=(int(exp[1][1])-int(exp[0][1]))*12 + dict[exp[1][0]]-dict[exp[0][0]]
-            else:
-                months+=(int(exp[1][1])-int(exp[0][1]))*12 - dict[exp[0][0]]-dict[exp[1][0]]
-    return months/12
-
-print(experience(professional_segment))
+def pg_college(pg_course, pg_line, pg_year):
+    try:
+        years="".join(pg_year)
+        nans=pg_line.replace(pg_course," ")
+        nnans=nans.replace(years," ")
+        college=nnans.split("from",1)[1]
+        # print("PG college = ",nnans.split("from",1)[1])
+        return college
+    except:
+        # print("PG college = ", pg_line)
+        return pg_line
