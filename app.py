@@ -72,6 +72,8 @@ def upload_resume():
     }
     if request.method == "POST":
         try:
+            resultant_list = []
+            
             if 'files' not in request.files:
                 flash('No resume found')
                 result.update({
@@ -80,7 +82,6 @@ def upload_resume():
                 return redirect(url_for('home'))
             files = request.files.getlist('files')
             
-            resultant_list = []
             for file in files:
 
                 if file.filename == "":
@@ -90,21 +91,6 @@ def upload_resume():
                     })
                     return redirect(url_for('home'))
                 if file and allowed_file(file.filename):
-                    bold = []
-                    h1 = []
-                    h2 = []
-                    h3 = []
-                    h4 = []
-                    italic = []
-                    color_dict = {}
-                    color_size_dict={}
-                    font_dict = {}
-                    font_size_dict = {}
-                    HEADERS_OF_RESUME = []
-                    font_dict_header = []
-                    color_dict_header = []
-                    count_size = 0
-                    count_color = 0
                     filename = secure_filename(file.filename)
                     # print("filename = ", filename)
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
