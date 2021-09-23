@@ -74,8 +74,7 @@ def properties_identifier(document):
                         color_dict[run.font.color.rgb].append(run.text)
                     else:
                         color_dict[run.font.color.rgb] = [run.text]
-
-                if run.font.color.rgb is not None:
+                        
                     if run.font.color.rgb in color_size_dict:
                         color_size_dict[run.font.color.rgb]+=1
                     else:
@@ -87,7 +86,6 @@ def properties_identifier(document):
                     else:
                         font_dict[run.font.size] = [run.text]
 
-                if run.font.size is not None:
                     if run.font.size in font_size_dict:
                         font_size_dict[run.font.size] += 1
                     else:

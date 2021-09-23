@@ -10,6 +10,7 @@ from experience_file import experience
 from extract_last_company import last_company
 import time
 from doc_to_docx import doc_to_docx
+from pdf_to_docx import convert_pdf2docx
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploaded_resumes')
 
@@ -17,7 +18,7 @@ if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
 print(UPLOAD_FOLDER)
-ALLOWED_EXTENSIONS = {'docx', 'doc'}
+ALLOWED_EXTENSIONS = {'docx', 'doc', 'pdf'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -28,22 +29,9 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def get_extracted_fields(name=None, email=None, phone=None, ug_degree=None, ug_year=None, ug_clg=None, pg_degree=None, pg_year=None, pg_clg=None, last_company=None, exp=None):
-    result = {
-        "Name": None,
-        "Email": None,
-        "Phone": None,
-        "UG Degree": None,
-        "UG Year": None,
-        "UG College": None,
-        "PG Degree": None,
-        "PG Year": None,
-        "PG College": None,
-        "Last Company": None,
-        "Experience": None
-    }
+def get_extracted_fields(name=None, email=None, phone=None, ug_degree=None, ug_year=None, ug_clg=None, pg_degree=None, pg_year=None, pg_clg=None, last_company=None, skills=None, exp=None):
 
-    result.update({
+    result = {
         "Name": name,
         "Email": email,
         "Phone": phone,
@@ -54,8 +42,9 @@ def get_extracted_fields(name=None, email=None, phone=None, ug_degree=None, ug_y
         "PG Year": pg_year,
         "PG College": pg_clg,
         "Last Company": last_company,
+        "Skills":skills,
         "Experience": exp
-    })
+    }
 
     return result
 
@@ -99,6 +88,9 @@ def upload_resume():
                     if filename.endswith('doc'):
                         filename = doc_to_docx(filename, app.config['UPLOAD_FOLDER'])
                         print(filename)
+                    elif filename.endswith('pdf'):
+                        input_file = filename[0:-4]
+                        filename = convert_pdf2docx(input_file)
 
                     document = document_object(filename)
 
@@ -162,7 +154,7 @@ def upload_resume():
                     
                     time.sleep(1)
 
-                    result = get_extracted_fields(name=name, email=email, phone=mobile_number, ug_degree=ug_course, pg_degree=pg_course, last_company=company_name, exp=exp, ug_year=ug_year, pg_year=pg_year, ug_clg=ug_clg_name, pg_clg=pg_clg_name)
+                    result = get_extracted_fields(name=name, email=email, phone=mobile_number, ug_degree=ug_course, pg_degree=pg_course, last_company=company_name, exp=exp, ug_year=ug_year, pg_year=pg_year, ug_clg=ug_clg_name, pg_clg=pg_clg_name, skills=skills_segment)
                     resultant_list.append(result)
 
             return render_template("result.html", resultant_list=resultant_list)

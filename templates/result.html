@@ -19,6 +19,7 @@
             <th>PG Year</th>
             <th>PG College</th>
             <th>Last Company</th>
+            <th>Skills</th>
             <th>Experience</th>
         </tr>
         {% for person in resultant_list %}
@@ -33,6 +34,7 @@
             <td>{{ person["PG Year"] }}</td>
             <td>{{ person["PG College"] }}</td>
             <td>{{ person["Last Company"] }}</td>
+            <td>{{ person["Skills"] }}</td>
             <td>{{ person["Experience"] }}</td>
         </tr>
         {% endfor %}
