@@ -19,7 +19,7 @@ If you had a python 3.x version you can do the following in linux
 
 or
 
-follow these instructions : https://docs.python.org/3/library/venv.html
+Follow these instructions : https://docs.python.org/3/library/venv.html
 
 ### Installing requirements
 After activating your virtual environment run the below command :
